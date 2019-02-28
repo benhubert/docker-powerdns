@@ -16,5 +16,8 @@ RUN sed -i -e 's#alpine/v[0-9.]*/#alpine/edge/#g' /etc/apk/repositories \
 COPY pdns.conf.tpl /etc/pdns/pdns.conf.tpl
 COPY start.sh /
 
+ENV PDNS_AUTH_LOCAL_ADDRESS=0.0.0.0
+ENV PDNS_AUTH_DISABLE_SYSLOG=yes
+
 ENTRYPOINT [ "tini", "-vv", "/start.sh" ]
-CMD [ "/usr/sbin/pdns_server", "--disable-syslog=yes", "--daemon=no", "--local-address=0.0.0.0" ]
+CMD [ "/usr/sbin/pdns_server", "--daemon=no" ]
